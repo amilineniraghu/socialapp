@@ -16,21 +16,13 @@ open_qebxpad_user@tfbnw.net
 pwd:
 Test*123#
 
-
-REST API
------------
-$app->post('/api/users/add', function (Request $request, Response $response) {
-$app->put('/api/users/update', function (Request $request, Response $response) {
-$app->get('/api/users/{provider}/{uid}', function (Request $request, Response $response,$args) {
-$app->get('/api/users', function (Request $request, Response $response) {
-
 Login URL
------------
+---------
 http://localhost/socialapp/public/login.php
 
 Installation:
 ----------------
-1) download Wamp server and install it in its default directory.
-2) copy paste the socialapp folder into directory of C:/wamp64/www
+1) Download zip file from github and extract it. Rename the folder as socialapp.
+2) download Wamp server and install it in its default directory.
+3) copy paste the "socialapp" folder into directory of C:/wamp64/www
 and launch URL http://localhost/socialapp/public/login.php
-3) if you are using anyother server for hosting webapp then some source needs to be modified.
