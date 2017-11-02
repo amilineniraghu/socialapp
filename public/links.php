@@ -204,7 +204,7 @@
             {
                 var JSONObject = {
                     'id': categoryid,
-                    'fav': 0,
+                    'fav': 1,
                 };
 
                 //set color as 0 in database and change the icon color
@@ -225,7 +225,7 @@
             }else{
                 var JSONObject = {
                     'id': categoryid,
-                    'fav': 1,
+                    'fav': 0,
                 };
 
                 //set color as 1 in database and change the icon color
@@ -237,13 +237,6 @@
                     dataType: "json",
                     data: JSON.stringify(JSONObject),
                     success: function (data, textStatus, jqXHR) {
-                        // console.log(data.length);
-                        // if (data.length > 0){
-                        //     for (var x = 0; x < data.length; x++) {
-                        //         console.log(addCategory(data[x].category));
-                        //         $('#categorygroup').append(addCategory(data[x].category,data[x].count));
-                        //     }
-                        // }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         //alert('addWine error: ' + textStatus);
@@ -310,10 +303,11 @@
 
 
         $(document).ready(function () {
-            
             // call restapi & display
             function loadlinks() {
-                var rootURL = "/socialapp/public/api/links/<?php echo $_SESSION['oauth_uid']?>";
+                var oauthid = '<?php echo  $_SESSION['oauth_uid']; ?>';
+                console.log(name);
+                var rootURL = "/socialapp/public/api/links/"+oauthid;
                 $.ajax({
                     type: 'GET',
                     contentType: 'application/json',
@@ -326,9 +320,8 @@
                             for (var x = 0; x < data.length; x++) {
                                 $('#listgroup').append(addLIItem(data[x].hyperlink,data[x].category,data[x].id));
                                 console.log(data[x].id);
-                                if(data[x].fav == 0){
+                                if(data[x].fav == 1){
                                     $("#"+data[x].id).addClass("favcolor");
-                                    //$("#"+data[x].id).css( "color", "red");    
                                 }
                             }
                         }
@@ -341,8 +334,8 @@
             loadlinks();
 
             function loadCategories() {
-                console.log(<?php echo $_SESSION['oauth_uid']?>);
-                var categoryURL = "/socialapp/public/api/links/categories/<?php echo $_SESSION['oauth_uid']?>";
+                var oauthid = '<?php echo  $_SESSION['oauth_uid']; ?>';
+                var categoryURL = "/socialapp/public/api/links/categories/"+oauthid;
                 $.ajax({
                     type: 'GET',
                     contentType: 'application/json',
@@ -366,18 +359,14 @@
            
             loadCategories();
 
-            
-
             $("#savelink").click(function() { 
-                var addLinkURL = "/socialapp/public/api/links/add/";
+                var addLinkURL = "/socialapp/public/api/links/add";
                 var linkname = $("#link_name").val();
                 var hyperlink = $("#hyperlink").val();
                 var category = $("#category").val();
-                var oauthid = <?php echo $_SESSION['oauth_uid']?>;
                 var fav = '0';
-                var temp = ""+oauthid+""
-                console.log(<?php echo $_SESSION['oauth_uid']?>);
-                console.log(temp);
+                var oauthid = '<?php echo  $_SESSION['oauth_uid']; ?>';
+
                 var JSONObject = {
                     'oauthid': oauthid,
                     'linkname': $("#link_name").val(),
@@ -396,23 +385,16 @@
                         alert('success');
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        //alert('addWine error: ' + textStatus);
-                        //$('#exampleModal').modal('hide');
                         $('#listgroup').empty();
                         loadlinks();
 
                         $('#categorygroup').empty();
                         loadCategories();
-
-                        
+                       
                     }
                 });
-
-
-
             });
- 
-        });
+         });
    
     </script>
 </body>
