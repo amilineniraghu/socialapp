@@ -118,4 +118,116 @@ $app->post('/api/users/add', function (Request $request, Response $response) {
         }
     });
 
+    $app->post('/api/links/add/', function (Request $request, Response $response,$args) {
+        $data = $request->getParsedBody();
+        
+          $link_data = [];
+          $link_data['oauthid'] = filter_var($data['oauthid'], FILTER_SANITIZE_STRING);
+          $link_data['linkname'] = filter_var($data['linkname'], FILTER_SANITIZE_STRING);
+          $link_data['hyperlink'] = filter_var($data['hyperlink'], FILTER_SANITIZE_STRING);
+          $link_data['fav'] = filter_var($data['fav'], FILTER_SANITIZE_STRING);
+          $link_data['category'] = filter_var($data['category'], FILTER_SANITIZE_STRING);
+          
+
+          $sql = "INSERT INTO links(oauthid,linkname,hyperlink,fav,category)	
+          VALUES (:oauthid,:linkname,:hyperlink,:fav,:category)";
+        
+          try{
+                $db = new db();
+                $conn = $db->connect();
+                $stmt = $conn->prepare($sql);
+                
+                $stmt->bindParam("oauthid",$link_data['oauthid']);
+                $stmt->bindParam("linkname", $link_data['linkname']);
+                $stmt->bindParam("hyperlink",$link_data['hyperlink']);
+                $stmt->bindParam("fav", $link_data['fav']);
+                $stmt->bindParam("category", $link_data['category']);
+                $stmt->execute();
+  
+              } catch(PDOException $e){
+                  echo '{"error":{"text":'.$e->getMessage().'}';
+              }
+    });
+
+    $app->get('/api/links/categories/{oauthid}', function (Request $request, Response $response,$args) {
+        $oauthid = $args['oauthid'];
+
+        //$sql = "SELECT DISTINCT category,COUNT(DISTINCT(category)) FROM `links` WHERE `oauthid`='$oauthid'";
+    $sql = "SELECT category,COUNT(*) as count FROM links WHERE `oauthid`='$oauthid' GROUP BY category ORDER BY count DESC;";
+        try{
+            $db = new db();
+            $db = $db->connect();
+            $stmt = $db->query($sql);
+            $users = $stmt->fetchAll(PDO::FETCH_OBJ);
+            $db=null;
+            echo json_encode($users);
+        } catch(PDOException $e){
+            echo '{"error":{"text":'.$e->getMessage().'}';
+        }
+    });
+
+    $app->get('/api/links/{uid}/{category}', function (Request $request, Response $response,$args) {
+        
+        $uid = $args['uid'];
+        $category = $args['category'];
+    
+        $sql = "SELECT * FROM `links` WHERE `oauthid`='$uid' AND `category`='$category'";
+    
+        try{
+            $db = new db();
+            $db = $db->connect();
+            $stmt = $db->query($sql);
+            $users = $stmt->fetchAll(PDO::FETCH_OBJ);
+            $db=null;
+            echo json_encode($users);
+        } catch(PDOException $e){
+            echo '{"error":{"text":'.$e->getMessage().'}';
+        }
+    });
+
+    $app->put('/api/links/updatefav', function (Request $request, Response $response) {
+       
+        $data = $request->getParsedBody();
+        
+          $ticket_data = [];
+          $ticket_data['id'] = filter_var($data['id'], FILTER_SANITIZE_STRING);
+          $ticket_data['fav'] = filter_var($data['fav'], FILTER_SANITIZE_STRING);
+          $id = $ticket_data['id'];
+          $fav = $ticket_data['fav'];
+
+
+        $sql = "UPDATE links SET fav='$fav' WHERE id='$id'";
+
+         try{
+             $db = new db();
+             $conn = $db->connect();
+             $stmt = $conn->prepare($sql);
+             $stmt->execute();
+ 
+             } catch(PDOException $e){
+                 echo '{"error":{"text":'.$e->getMessage().'}';
+             }
+     });
+
+     $app->delete('/api/links/delete', function (Request $request, Response $response) {
+        
+         $data = $request->getParsedBody();
+         
+           $ticket_data = [];
+           $ticket_data['id'] = filter_var($data['id'], FILTER_SANITIZE_STRING);
+           $id = $ticket_data['id'];
+
+         $sql = "DELETE FROM links WHERE id='$id'";
+
+          try{
+              $db = new db();
+              $conn = $db->connect();
+              $stmt = $conn->prepare($sql);
+              $stmt->execute();
+  
+              } catch(PDOException $e){
+                  echo '{"error":{"text":'.$e->getMessage().'}';
+              }
+      });
+
     ?>

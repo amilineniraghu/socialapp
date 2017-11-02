@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Oct 26, 2017 at 08:31 AM
+-- Generation Time: Nov 02, 2017 at 05:29 AM
 -- Server version: 5.7.19
 -- PHP Version: 7.1.9
 
@@ -30,13 +30,16 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `links`;
 CREATE TABLE IF NOT EXISTS `links` (
-  `oauthid` varchar(250) CHARACTER SET utf8 NOT NULL,
+  `oauthid` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `linkname` varchar(200) CHARACTER SET utf8 NOT NULL,
   `hyperlink` varchar(250) CHARACTER SET utf8 NOT NULL,
   `fav` int(2) NOT NULL,
   `category` varchar(200) CHARACTER SET utf8 NOT NULL,
-  `id` int(100) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=86 DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `users`
@@ -54,12 +57,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   `hybridauth_provider_uid` varchar(255) NOT NULL COMMENT 'Provider user ID',
   PRIMARY KEY (`id`),
   UNIQUE KEY `hybridauth_idx` (`hybridauth_provider_name`,`hybridauth_provider_uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `users`
---
-
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
