@@ -4,7 +4,7 @@ if(!session_id()) {
  }
 
 //Include Google client library 
-include_once '../vendor/autoload.php';
+require_once '../vendor/autoload.php';
 
 /*
  * Configuration and setup Google API
