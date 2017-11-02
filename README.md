@@ -24,6 +24,9 @@ http://localhost/socialapp/public/login.php
 Installation:
 ----------------
 1)Download zip file from github and extract it. Rename the folder as socialapp.
+
 2)Create a database with name socialapp and import the sql "socialapp.sql" located in socialapp/sql folder mentioned in previous step into mysql database.
+
 3)download Wamp server and install it in its default directory.
+
 4)copy paste the "socialapp" folder into directory of C:/wamp64/www and launch URL http://localhost/socialapp/public/login.php
