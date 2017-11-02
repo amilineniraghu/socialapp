@@ -154,7 +154,7 @@
         $(document).ready(function () {
             $('#successalert').hide();
             // call restapi & display in table
-            var rootURL = "http://localhost/socialapp/public/api/users/<?php echo $_SESSION['oauth_provider']?>/<?php echo $_SESSION['oauth_uid']?>";
+            var rootURL = "/socialapp/public/api/users/<?php echo $_SESSION['oauth_provider']?>/<?php echo $_SESSION['oauth_uid']?>";
             $.ajax({
                 type: 'GET',
                 contentType: 'application/json',
@@ -192,7 +192,7 @@
 
                 $.ajax({
                     type: "PUT",
-                    url: "http://localhost/socialapp/public/api/users/update",
+                    url: "/socialapp/public/api/users/update",
                     contentType: "application/json",
                     data: JSON.stringify(JSONObject),
                     dataType: "json",
