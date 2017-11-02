@@ -87,13 +87,11 @@
                             <!-- First column -->
                             <div class="col-md-12">
                                 <div class="list-group anyClass" id="listgroup">
-
                                 </div>
                             <!-- First column -->
                         </div>
                         <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add</a>
                     </div>
-
                 </div>
                 <!--/.Card-->
             </div>
@@ -104,7 +102,6 @@
                     <div class="card-body">
                     <div class="col-md-12">
                         <div class="list-group" id="categorygroup">
-
                         </div>
                     </div>
                     </div>
@@ -165,8 +162,6 @@
     <script type="text/javascript" src="../assets/js/mdb.min.js"></script>
     
         <script>
-
-
             function loadLinksByCategoryName(category) {
                 var categoryURL = "/socialapp/public/api/links/<?php echo $_SESSION['oauth_uid']?>/"+category;
                 $.ajax({
@@ -196,7 +191,6 @@
 
 
         function updateFav(categoryid) {
-            //alert(category);
             var myClass = $("#"+categoryid).attr("class");
             var n = myClass.search("favcolor");
 
@@ -211,11 +205,12 @@
                 var categoryURL = "/socialapp/public/api/links/updatefav";
                 $.ajax({
                     type: 'PUT',
-                    contentType: 'application/json',
+                    contentType: 'application/json; charset=utf-8',
                     url: categoryURL,
                     dataType: "json",
                     data: JSON.stringify(JSONObject),
                     success: function (data, textStatus, jqXHR) {
+                        alert("updated");
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         //alert('addWine error: ' + textStatus);
@@ -232,11 +227,12 @@
                 var categoryURL = "/socialapp/public/api/links/updatefav";
                 $.ajax({
                     type: 'PUT',
-                    contentType: 'application/json',
+                    contentType: 'application/json; charset=utf-8',
                     url: categoryURL,
                     dataType: "json",
                     data: JSON.stringify(JSONObject),
                     success: function (data, textStatus, jqXHR) {
+                        alert("updated");
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         //alert('addWine error: ' + textStatus);
@@ -249,16 +245,16 @@
         function deleteLink(target){
 
             var JSONObject = {
-                    'id': target,
+                    'id': target
                 };
 
                 //set color as 1 in database and change the icon color
                 var categoryURL = "/socialapp/public/api/links/delete";
                 $.ajax({
-                    type: 'DELETE',
-                    contentType: 'application/json',
+                    type: "DELETE",
+                    contentType: 'application/json; charset=utf-8',
                     url: categoryURL,
-                    dataType: "json",
+                    dataType:'json',
                     data: JSON.stringify(JSONObject),
                     success: function (data, textStatus, jqXHR) {
                     },
@@ -270,14 +266,15 @@
         }
 
         function addLIItem(link,category,id) {
-                return "<div class='list-group-item list-group-item-light'>"+
-                "<div class='d-flex flex-row justify-content-end '>"+
-                "<div class='p-2'><a href=''><i class='fa fa-heart fa-2x' onclick='updateFav(\""+id+"\")'aria-hidden='true' id='"+id+"'></i></a></div>"+
-                "<div class='mr-auto p-2 text-primary'>"+link+"</div>"+
-                "<div class='p-2'><h4><span class='badge badge-pill bg-primary'>"+category+"</span></h4></div>"+
-                "<a href=''><i class='fa fa-times' style='color:red' onclick='deleteLink(\""+id+"\")' aria-hidden='true'></i></a>"+
+               return "<div class='list-group-item list-group-item-light mr-3'>"+
+              "<div class='d-flex flex-row flex-wrap justify-content-right  '>"+
+              "<div class='p-2'><a href=''><i class='fa fa-heart fa-2x' onclick='updateFav(\""+id+"\")'aria-hidden='true' id='"+id+"'></i></a></div>"+
+               "<div class='mr-auto p-2'>"+link+"</div>"+
+              "<div class='p-2'><h4><span class='badge badge-pill bg-primary'>"+category+"</span></h4></div>"+
+               "<div class='p-2'><a href=''><i class='fa fa-times-circle fa-1x' style='color:red' onclick='deleteLink(\""+id+"\")' aria-hidden='true'></i></a></div>"+
+               "</div>"+
                 "</div>";
-        }
+            }
 
         function addCategory(category,count){
             var color;
@@ -293,14 +290,25 @@
                 color = "purple";
             }
 
-            //return "<a href='#' onclick='showDiv(\""+category+"\")'><span class='badge badge-pill "+ color+"'>"+category+"</span></a>";
-
             return "<a href='#' onclick='showSelectedCategory(\""+category+"\")'><li class='list-group-item d-flex justify-content-between align-items-center'>"+
             category+ "<span class='badge badge-primary badge-pill'>"+count+"</span>"+
                     "</li></a>";
 
         }
 
+        function addNoCategory(){
+            return "<li class='list-group-item list-group-item-light mr-3'>"+
+                    "<p>No Categories Found</p>"+
+                    "</li>";
+
+        }
+
+        function addNoLinks(){
+            return "<li class='list-group-item d-flex justify-content-between align-items-center'>"+
+                    "<p>No Links Found</p>"+
+                    "</li>";
+
+        }
 
         $(document).ready(function () {
             // call restapi & display
@@ -309,7 +317,7 @@
                 var rootURL = "/socialapp/public/api/links/"+oauthid;
                 $.ajax({
                     type: 'GET',
-                    contentType: 'application/json',
+                    contentType: 'application/json; charset=utf-8',
                     url: rootURL,
                     dataType: "json",
                     data: null,
@@ -322,10 +330,13 @@
                                     $("#"+data[x].id).addClass("favcolor");
                                 }
                             }
+                        }else{
+
+                            $('#listgroup').append(addNoLinks());
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        alert('addWine error: ' + textStatus);
+                        alert('Could Not Load Links: ' + textStatus);
                     }
                 });
             }
@@ -336,7 +347,7 @@
                 var categoryURL = "/socialapp/public/api/links/categories/"+oauthid;
                 $.ajax({
                     type: 'GET',
-                    contentType: 'application/json',
+                    contentType: 'application/json; charset=utf-8',
                     url: categoryURL,
                     dataType: "json",
                     data: null,
@@ -347,10 +358,12 @@
                                 console.log(addCategory(data[x].category));
                                 $('#categorygroup').append(addCategory(data[x].category,data[x].count));
                             }
+                        }else{
+                            $('#categorygroup').append(addNoCategory());
                         }
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        alert('addWine error: ' + textStatus);
+                        alert('loadCategories error: ' + textStatus);
                     }
                 });
             }
@@ -380,15 +393,14 @@
                     dataType: "json",
                     data: JSON.stringify(JSONObject),
                     success: function (data, textStatus, jqXHR) {
-                        alert('success');
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
                         $('#listgroup').empty();
                         loadlinks();
 
                         $('#categorygroup').empty();
                         loadCategories();
-                       
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert('Could Not add Link!!: ' + textStatus);
                     }
                 });
             });

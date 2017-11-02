@@ -74,7 +74,6 @@ $app->post('/api/users/add', function (Request $request, Response $response) {
 
     $app->put('/api/users/update', function (Request $request, Response $response) {
         $data = $request->getParsedBody();
-      
         $ticket_data = [];
         $ticket_data['email'] = filter_var($data['email'], FILTER_SANITIZE_STRING);
         $ticket_data['first_name'] = filter_var($data['first_name'], FILTER_SANITIZE_STRING);
@@ -95,7 +94,7 @@ $app->post('/api/users/add', function (Request $request, Response $response) {
              $conn = $db->connect();
              $stmt = $conn->prepare($sql);
              $stmt->execute();
- 
+             echo json_encode("{'success':'200'}");
              } catch(PDOException $e){
                  echo '{"error":{"text":'.$e->getMessage().'}';
              }
@@ -120,7 +119,7 @@ $app->post('/api/users/add', function (Request $request, Response $response) {
 
     $app->post('/api/links/add', function (Request $request, Response $response,$args) {
         $data = $request->getParsedBody();
-        
+        $operation = "sucess";
           $link_data = [];
           $link_data['oauthid'] = filter_var($data['oauthid'], FILTER_SANITIZE_STRING);
           $link_data['linkname'] = filter_var($data['linkname'], FILTER_SANITIZE_STRING);
@@ -143,7 +142,7 @@ $app->post('/api/users/add', function (Request $request, Response $response) {
                 $stmt->bindParam("fav", $link_data['fav']);
                 $stmt->bindParam("category", $link_data['category']);
                 $stmt->execute();
-  
+                echo json_encode($operation);
               } catch(PDOException $e){
                   echo '{"error":{"text":'.$e->getMessage().'}';
               }
@@ -186,7 +185,7 @@ $app->post('/api/users/add', function (Request $request, Response $response) {
     });
 
     $app->put('/api/links/updatefav', function (Request $request, Response $response) {
-       
+        $operation = "{ name: 'John', time: '2pm' }";
         $data = $request->getParsedBody();
         
           $ticket_data = [];
@@ -203,16 +202,15 @@ $app->post('/api/users/add', function (Request $request, Response $response) {
              $conn = $db->connect();
              $stmt = $conn->prepare($sql);
              $stmt->execute();
- 
+             echo json_encode($operation);
              } catch(PDOException $e){
                  echo '{"error":{"text":'.$e->getMessage().'}';
              }
      });
 
      $app->delete('/api/links/delete', function (Request $request, Response $response) {
-        
          $data = $request->getParsedBody();
-         
+
            $ticket_data = [];
            $ticket_data['id'] = filter_var($data['id'], FILTER_SANITIZE_STRING);
            $id = $ticket_data['id'];
@@ -224,7 +222,7 @@ $app->post('/api/users/add', function (Request $request, Response $response) {
               $conn = $db->connect();
               $stmt = $conn->prepare($sql);
               $stmt->execute();
-  
+              //echo json_encode("{'success':'200'}");
               } catch(PDOException $e){
                   echo '{"error":{"text":'.$e->getMessage().'}';
               }
