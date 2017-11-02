@@ -31,3 +31,6 @@ Installation:
 3) Download Wamp server and install it in its default directory.
 
 4) Copy paste the "socialapp" folder into directory of C:/wamp64/www and launch URL http://localhost/socialapp/public/login.php
+
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f682fcd9e4a545ebb9716cd31e0908e3)](https://www.codacy.com/app/raghu.amilineni/socialapp?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=amilineniraghu/socialapp&amp;utm_campaign=Badge_Grade)
