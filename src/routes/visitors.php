@@ -153,7 +153,7 @@ $app->post('/api/users/add', function (Request $request, Response $response) {
         $oauthid = $args['oauthid'];
 
         //$sql = "SELECT DISTINCT category,COUNT(DISTINCT(category)) FROM `links` WHERE `oauthid`='$oauthid'";
-    $sql = "SELECT category,COUNT(*) as count FROM links WHERE `oauthid`='$oauthid' GROUP BY category ORDER BY count DESC;";
+        $sql = "SELECT category,COUNT(*) as count FROM links WHERE `oauthid`='$oauthid' GROUP BY category ORDER BY count DESC;";
         try{
             $db = new db();
             $db = $db->connect();
