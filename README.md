@@ -1,4 +1,7 @@
 # socialapp
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f682fcd9e4a545ebb9716cd31e0908e3)](https://www.codacy.com/app/raghu.amilineni/socialapp?utm_source=github.com&utm_medium=referral&utm_content=amilineniraghu/socialapp&utm_campaign=badger)
+
 This PHP app showcases usage of slim3 framework to create Restful webservices and also how to use social authentication using google and facebook.
 
 Technology used:
