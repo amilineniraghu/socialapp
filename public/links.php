@@ -306,7 +306,6 @@
             // call restapi & display
             function loadlinks() {
                 var oauthid = '<?php echo  $_SESSION['oauth_uid']; ?>';
-                console.log(name);
                 var rootURL = "/socialapp/public/api/links/"+oauthid;
                 $.ajax({
                     type: 'GET',
@@ -319,7 +318,6 @@
                         if (data.length > 0){
                             for (var x = 0; x < data.length; x++) {
                                 $('#listgroup').append(addLIItem(data[x].hyperlink,data[x].category,data[x].id));
-                                console.log(data[x].id);
                                 if(data[x].fav == 1){
                                     $("#"+data[x].id).addClass("favcolor");
                                 }

@@ -118,7 +118,7 @@ $app->post('/api/users/add', function (Request $request, Response $response) {
         }
     });
 
-    $app->post('/api/links/add/', function (Request $request, Response $response,$args) {
+    $app->post('/api/links/add', function (Request $request, Response $response,$args) {
         $data = $request->getParsedBody();
         
           $link_data = [];
